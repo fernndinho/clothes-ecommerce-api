@@ -10,7 +10,9 @@ import java.util.Optional;
 public interface ColorRepository extends JpaRepository<ColorEntity, Long> {
     Optional<ColorEntity> findBySlug(String slug);
 
-    List<ColorEntity>  findBySlugIn(Collection<String> slug);
+    List<ColorEntity> findBySlugIn(Collection<String> slug);
+
+    boolean existsBySlug(String slug);
 
     void deleteBySlug(String slug);
 }

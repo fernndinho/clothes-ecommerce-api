@@ -1,19 +1,19 @@
 package me.fernndinho.shop.colors;
 
+import lombok.AllArgsConstructor;
 import me.fernndinho.shop.colors.models.ColorEntity;
 import me.fernndinho.shop.colors.payload.ColorPayload;
 import me.fernndinho.shop.colors.repo.ColorRepository;
+import me.fernndinho.shop.shared.error.exceptions.ConflictException;
 import me.fernndinho.shop.shared.error.exceptions.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ColorService {
-    @Autowired
     private ColorRepository repo;
 
     public List<ColorPayload> getAll() {
@@ -30,17 +30,19 @@ public class ColorService {
     }
 
     public ColorPayload create(ColorPayload payload) {
-        ColorEntity color = new ColorEntity();
-        color.setName(payload.getName());
-        color.setSlug(payload.getSlug());
-        color.setHex(payload.getHex());
+        if(repo.existsBySlug(payload.getSlug()))
+            throw new ConflictException("the color provided already exist");
 
-        ColorEntity createdColor = repo.save(color);
+        ColorEntity color = new ColorEntity(null, payload.getName(), payload.getSlug(), payload.getHex());
 
-        return new ColorPayload(createdColor);
+        ColorEntity savedColor = repo.save(color);
+
+        return new ColorPayload(savedColor);
     }
 
-    public void delete(String slug) { //TODO: check first if some product has the color and remove from it
+    public void delete(String slug) {
+        if(!repo.existsBySlug(slug))
+            throw new NotFoundException("cannot delete a color that does not exist");
         repo.deleteBySlug(slug);
     }
 }

@@ -1,6 +1,0 @@
-- add categories hierarchy
-- add different types of product variant (color, sizes, short and long sleeve)
-- add exception handler
-- add event listeners
-- add prices ranges
-- separe file service from the io operations

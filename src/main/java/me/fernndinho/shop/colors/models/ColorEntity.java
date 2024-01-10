@@ -4,9 +4,9 @@ import lombok.*;
 
 import jakarta.persistence.*;
 
-@Data
 @Entity
 @Table(name = "color")
+@Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class ColorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
