@@ -1,14 +1,12 @@
 package me.fernndinho.shop.categories.payload;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data @Builder(toBuilder = true)
+@NoArgsConstructor @AllArgsConstructor
 public class CategoryCreateRequest {
     private String name;
     private String slug;

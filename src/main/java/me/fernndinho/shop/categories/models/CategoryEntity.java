@@ -1,14 +1,12 @@
 package me.fernndinho.shop.categories.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.*;
 import java.util.List;
 
-
-@Getter
-@Setter
+@Data @Builder(toBuilder = true)
+@AllArgsConstructor @NoArgsConstructor
 @Entity
 public class CategoryEntity {
     @Id
@@ -25,8 +23,6 @@ public class CategoryEntity {
     @OneToMany(mappedBy = "father")
     private List<CategoryEntity> childs;
 
-    private boolean hidden = false;
-
     public boolean hasFather() {
         return father != null;
     }
@@ -34,5 +30,5 @@ public class CategoryEntity {
     public boolean hasChilds() {
         return childs != null && !childs.isEmpty();
     }
-}
 
+}
